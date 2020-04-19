@@ -5,27 +5,41 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const expressValidator = require('express-validator');
 
-const WordModel = require('./db/word');
+const Word = require('./db/word');
 const keys = require('./config');
 const app = express();
 const port = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-const MongoClient = require('mongodb').MongoClient;
-const uri = keys.DB_URL;
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  console.log("Mongo Connection Established");
-  client.close();
-});
-
+// const MongoClient = require('mongodb').MongoClient;
+// const uri = keys.DB_URL;
+// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+// client.connect(err => {
+//   const collection = client.db("test").collection("devices");
+//   // perform actions on the collection object
+//   console.log("Mongo Connection Established");
+// });
+mongoose.connect(keys.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error: '));
 app.post('/api/add', (req, res) => {
   //mongo add record
-  console.log(req);
-  res.send("Hello");
+  console.log(req.body);
+  var new_record = {
+    user: "admin",
+    word: req.body.word,
+    meaning: req.body.meaning,
+    sentence: req.body.sentence,
+    toBeAsked: true
+  }
+  var word = new Word(new_record);
+  word.save((err) => {
+    if(err){
+      res.sendStatus(500);
+    }
+    res.sendStatus(200);
+  });
+  // res.send("Hello");
 });
 
 app.get('/api/get', (req, res) => {
