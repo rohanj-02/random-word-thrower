@@ -7,6 +7,7 @@ const WordSchema = new Schema({
     word: {type: String},
     meaning: {type: String},
     sentence: {type: String},
+    toBeAsked: {type: Boolean}
 });
 
 const Word = mongoose.model('Word', WordSchema);

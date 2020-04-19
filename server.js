@@ -22,6 +22,16 @@ client.connect(err => {
   client.close();
 });
 
+app.post('/api/add', (req, res) => {
+  //mongo add record
+  console.log(req);
+  res.send("Hello");
+});
+
+app.get('/api/get', (req, res) => {
+  //get a random record from mongo and then send back response
+});
+
 //Checking react and express
 app.get('/api/hello', (req, res) => {
   res.send({ express: 'Hello From Express' });
