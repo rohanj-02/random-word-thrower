@@ -1,5 +1,4 @@
 import React from "react";
-import {Link} from "react-router-dom";
 import {
     FormControl,
     InputLabel,
@@ -35,26 +34,14 @@ class addWord extends React.Component{
 
         Axios.post(url, word).then((res) => {
             console.log("Got the response" + res);
+            this.setState({
+                word: "",
+                meaning: "",
+                sentence: ""
+            })
         }).catch((err) => {
             console.log(err);
         });
-
-        // fetch(this.props.formAction, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({"word": this.state.word,
-        //                         "meaning": this.state.meaning,
-        //                         "sentence": this.state.sentence})
-        // })
-        // .then(res => res.json())
-        // .then(
-        //     (result) => {
-        //         console.log("Got the response");
-        //     }
-        // );
     }
 
     render(){
@@ -75,31 +62,26 @@ class addWord extends React.Component{
     
               <FormControl margin="normal" fullWidth>
                 <InputLabel htmlFor="word">Word</InputLabel>
-                <Input id="word" type="text" onChange = {this.handleChange}/>
+                <Input id="word" type="text" onChange = {this.handleChange} value={this.state.word}/>
               </FormControl>
     
               <FormControl margin="normal" fullWidth>
                 <InputLabel htmlFor="meaning">Meaning</InputLabel>
-                <Input id="meaning" type="text" onChange = {this.handleChange}/>
+                <Input id="meaning" type="text" onChange = {this.handleChange} value={this.state.meaning}/>
               </FormControl>
     
               <FormControl margin="normal" fullWidth>
                 <InputLabel htmlFor="sentence">Sentence</InputLabel>
-                <Input id="sentence" multiline rows={5} onChange = {this.handleChange} />
+                <Input id="sentence" multiline rows={5} onChange = {this.handleChange} value={this.state.sentence}/>
               </FormControl>
     
-              <Button variant="contained" color="primary" size="medium">
-                  <input type="submit"/>Send
+              <Button variant="contained" color="primary" size="medium" type="submit">
+                  Send
               </Button>
             </form>
           </div>
         )
     }
 }
-
-addWord.defaultProps = {
-    formAction: 'http://localhost:5000/api/addWord',
-    method: 'post'
-};
 
 export default addWord;

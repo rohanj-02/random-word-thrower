@@ -22,6 +22,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 // });
 mongoose.connect(keys.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error: '));
+db = mongoose.connection;
+
 app.post('/api/add', (req, res) => {
   //mongo add record
   console.log(req.body);
@@ -44,6 +46,14 @@ app.post('/api/add', (req, res) => {
 
 app.get('/api/get', (req, res) => {
   //get a random record from mongo and then send back response
+  Word.find({}, (err, words) => {
+    const length = words.length;
+    let randomNumber = Math.random() * 10000000000;
+    randomNumber = parseInt(randomNumber) % length;
+    res.send(words[randomNumber]);
+    console.log(words[randomNumber]);
+  });
+
 });
 
 //Checking react and express
