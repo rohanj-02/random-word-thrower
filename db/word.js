@@ -1,15 +1,14 @@
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema();
-const Model = mongoose.Model();
+const Schema = mongoose.Schema;
 
 const WordSchema = new Schema({
-    user: String,
-    word: String,
-    meaning: String,
-    sentence: String,
+    user: {type: String},
+    word: {type: String},
+    meaning: {type: String},
+    sentence: {type: String},
 });
 
-const WordModel = new Model('Word', WordSchema);
+const Word = mongoose.model('Word', WordSchema);
 
-export default WordModel;
+module.exports = Word;
