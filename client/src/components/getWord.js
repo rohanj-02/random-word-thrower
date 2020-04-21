@@ -1,4 +1,5 @@
 import React from "react";
+import NavBar from "./NavBar";
 import {Typography} from "@material-ui/core";
 
 class getWord extends React.Component{
@@ -30,6 +31,7 @@ class getWord extends React.Component{
     render(){
         return (
             <div>
+                <NavBar/>
                 <h3>Word</h3>
                 <p>{this.state.word}</p>
                 <h3>Meaning</h3>
