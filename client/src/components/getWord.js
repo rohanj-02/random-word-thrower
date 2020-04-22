@@ -8,14 +8,10 @@ import {
     Grid
     } from "@material-ui/core";
 
-const gridStyle = {
-    margin: 13,
-    padding:13,
-    display:"flex",
+const wordStyleBefore = {
     justifyContent:"center",
-    alignItems:"center"
+    display:"flex"
 }
-
 class getWord extends React.Component{
     
     constructor(props){
@@ -27,30 +23,14 @@ class getWord extends React.Component{
         }
     }
 
-    // componentDidMount() {
-    //     this.callApi()
-    //     .then(res => this.setState({word: res.word,
-    //                                 meaning: res.meaning,
-    //                                 sentence: res.sentence}))
-    //     .catch(err => console.log(err));
-    // }
-
     componentDidMount(){
-        // if(this.props.location.state.wordList){
             this.setState({wordList: this.props.location.state.wordList});
             const length = this.props.location.state.wordList.length;
             let randomNumber = Math.random() * 10000000000;
             randomNumber = parseInt(randomNumber) % length;
             this.setState({selectedWord: randomNumber});
-        // }  
     }
-    // callApi = async() => {
-    //     const res = await fetch('/api/get');
-    //     const body = await res.json();
-    //     console.log(body);
-    //     if(res.status !== 200) throw Error(body.message);
-    //     return body;
-    // }
+
     anotherWord = (event) =>{
         const length = this.state.wordList.length;
         let randomNumber = Math.random() * 10000000000;
@@ -61,60 +41,78 @@ class getWord extends React.Component{
         });
     }
 
-    showMeaning = (event) => {
+    handleShowMeaning = (event) => {
         this.setState({showMeaning: true});
     }
 
-    // anotherWord = (event) => {
-    //     this.callApi()
-    //     .then(res => this.setState({
-    //                             word: res.word,
-    //                             meaning: res.meaning,
-    //                             sentence: res.sentence,
-    //                             showMeaning: false
-    //                         }))
-    //     .catch(err => console.log(err));
-    // }
-
     render(){
-        console.log("list:");
-        console.log(this.state.wordList);
-        console.log(this.state.selectedWord);
 
         const {word, meaning, sentence} = this.state.wordList[this.state.selectedWord];
+        const showMeaning = this.state.showMeaning;
         return (
             <div>
                 <ThemeProvider theme={theme}>
                     <NavBar/>
-                    <div style={{
-                        justifyContent:"center",
-                        display:"flex",
-                        margin:20,
-                        padding:20
+                    <div 
+                        style={{
+                            justifyContent:"center",
+                            display:"flex",
+                            margin:20,
+                            padding:20
                     }}>
                         <Grid container>
-                            <Grid item xs={12} style={gridStyle}>
-                                <Typography variant="h4">Word</Typography>
+                            <Grid item xs={12} 
+                                style={showMeaning ? {margin: 3,
+                                    padding: 3} :wordStyleBefore}>
+                                <Typography style={{
+                                    font:"Roboto", 
+                                    fontWeight:"bold", 
+                                    fontSize:"x-large"}}>{word}</Typography>
                             </Grid>
-                            <Grid item xs={12} style={gridStyle}>
-                                <Typography variant="subtitle1">{word}</Typography>
-                            </Grid>
-                            {!this.state.showMeaning && <Grid item xs={12} style={gridStyle}>
-                                <Button color="primary" variant="contained" onClick={this.showMeaning}>Show Meaning</Button>
+                            {showMeaning && <Grid item xs={12}>
+                                <Typography variant="subtitle1" 
+                                    style={{
+                                        font:"Roboto", 
+                                        fontSize:"medium",
+                                        margin: 3,
+                                        padding: 3
+                                    }}>{meaning}</Typography>        
                             </Grid>}
-                            {this.state.showMeaning && <Grid item xs={12} style={gridStyle}>
-                                <Typography variant="h4">Meaning</Typography>
+                            {showMeaning && <Grid item xs={12}>
+                                <Typography variant="subtitle1" 
+                                    style={{
+                                        fontStyle:"italic",
+                                        font:"Roboto", 
+                                        fontSize:"medium",
+                                        fontWeight:"lighter",
+                                        margin: 3,
+                                        padding: 3
+                                    }}>{sentence}</Typography>        
                             </Grid>}
-                            {this.state.showMeaning && <Grid item xs={12} style={gridStyle}>
-                                <Typography variant="subtitle1">{meaning}</Typography>        
+                            {!showMeaning && <Grid item xs={12} 
+                                style={{
+                                    display:"flex",
+                                    justifyContent:"center",
+                                    position: "absolute",
+                                    bottom: "20%",
+                                    left:"0",
+                                    right:"0",
+                                    marginLeft:"auto",
+                                    marginRight:"auto",
+                                }}>
+                                <Button color="primary" variant="contained" onClick={this.handleShowMeaning}>Show Meaning</Button>
                             </Grid>}
-                            {this.state.showMeaning && <Grid item xs={12} style={gridStyle}>
-                                <Typography variant="h4">Sentence</Typography>
-                            </Grid>}
-                            {this.state.showMeaning && <Grid item xs={12} style={gridStyle}>
-                                <Typography variant="subtitle1">{sentence}</Typography>        
-                            </Grid>}
-                            <Grid item xs={12} style={gridStyle}>
+                            <Grid item xs={12} 
+                                style={{
+                                    display:"flex",
+                                    justifyContent:"center",
+                                    position: "absolute",
+                                    bottom: "10%",
+                                    left:"0",
+                                    right:"0",
+                                    marginLeft:"auto",
+                                    marginRight:"auto"
+                                }}>
                                 <Button color="primary" variant="contained" onClick={this.anotherWord}>Get Another Word</Button>
                             </Grid>
                         </Grid>

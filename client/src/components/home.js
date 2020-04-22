@@ -67,6 +67,16 @@ class Home extends React.Component {
                                     </Button>
                                 </Link>
                             </Grid>
+                            <Grid item xs={12} style={{display: 'flex', justifyContent:"center", margin: 10}}>
+                                <Link to={{
+                                    pathname: "/listWord",
+                                    state: this.state
+                                }}>
+                                    <Button variant = "contained" color = "primary" size = "medium" name="listButton">
+                                        Check Your List
+                                    </Button>
+                                </Link>
+                            </Grid>
                         </Grid>
                     </div>
                 </ThemeProvider>

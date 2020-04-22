@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import GetWord from "./getWord";
 import AddWord from "./addWord";
+import ListWord from "./listWords";
 import Home from "./home";
 
 class Page1 extends React.Component{
@@ -40,6 +41,7 @@ class Page1 extends React.Component{
                         <Route exact path="/" component={Home}/>
                         <Route exact path ="/addWord" component={AddWord}/>
                         <Route exact path="/getWord" component={GetWord}/>
+                        <Route exact path="/listWord" component={ListWord}/>
                     </Switch>
                 </BrowserRouter>
             </div>

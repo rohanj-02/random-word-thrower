@@ -37,15 +37,9 @@ app.post('/api/add', (req, res) => {
 });
 
 app.get('/api/get', (req, res) => {
-  //get a random record from mongo and then send back response
   Word.find({}, (err, words) => {
-    // const length = words.length;
-    // let randomNumber = Math.random() * 10000000000;
-    // randomNumber = parseInt(randomNumber) % length;
-    // res.send(words[randomNumber]);
     res.send(words);
     console.log(words);
-    // console.log(words[randomNumber]);
   });
 
 });

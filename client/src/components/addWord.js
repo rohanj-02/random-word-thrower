@@ -3,9 +3,11 @@ import {
     FormControl,
     InputLabel,
     Input,
-    Button} from "@material-ui/core";
+    Button,
+    } from "@material-ui/core";
 import Axios from "axios";
 import NavBar from "./NavBar";
+import {Redirect} from "react-router";
 
 class addWord extends React.Component{
     constructor(props){
@@ -13,7 +15,8 @@ class addWord extends React.Component{
         this.state = {
             word: "",
             meaning: "",
-            sentence: ""
+            sentence: "",
+            redirect: false
         }
     }
 
@@ -36,15 +39,20 @@ class addWord extends React.Component{
             this.setState({
                 word: "",
                 meaning: "",
-                sentence: ""
+                sentence: "",
+                redirect: true
             })
         }).catch((err) => {
             console.log(err);
         });
+
     }
 
 
     render(){
+        if(this.state.redirect){
+            return <Redirect push to="/" />
+        }
         return(
             <div>
                 <NavBar/>
@@ -76,10 +84,9 @@ class addWord extends React.Component{
                         <InputLabel htmlFor="sentence">Sentence</InputLabel>
                         <Input id="sentence" multiline rows={5} onChange = {this.handleChange} value={this.state.sentence}/>
                     </FormControl>
-            
-                    <Button variant="contained" color="primary" size="medium" type="submit">
-                        Send
-                    </Button>
+                        <Button variant="contained" color="primary" size="medium" type="submit">
+                            Send
+                        </Button>
                 </form>
             </div>
         </div>
