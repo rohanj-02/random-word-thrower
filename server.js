@@ -12,14 +12,6 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-// const MongoClient = require('mongodb').MongoClient;
-// const uri = keys.DB_URL;
-// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-// client.connect(err => {
-//   const collection = client.db("test").collection("devices");
-//   // perform actions on the collection object
-//   console.log("Mongo Connection Established");
-// });
 mongoose.connect(keys.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error: '));
 db = mongoose.connection;
@@ -47,25 +39,15 @@ app.post('/api/add', (req, res) => {
 app.get('/api/get', (req, res) => {
   //get a random record from mongo and then send back response
   Word.find({}, (err, words) => {
-    const length = words.length;
-    let randomNumber = Math.random() * 10000000000;
-    randomNumber = parseInt(randomNumber) % length;
-    res.send(words[randomNumber]);
-    console.log(words[randomNumber]);
+    // const length = words.length;
+    // let randomNumber = Math.random() * 10000000000;
+    // randomNumber = parseInt(randomNumber) % length;
+    // res.send(words[randomNumber]);
+    res.send(words);
+    console.log(words);
+    // console.log(words[randomNumber]);
   });
 
-});
-
-//Checking react and express
-app.get('/api/hello', (req, res) => {
-  res.send({ express: 'Hello From Express' });
-});
-
-app.post('/api/world', (req, res) => {
-  console.log(req.body);
-  res.send(
-    `I received your POST request. This is what you sent me: ${req.body.post}`,
-  );
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
