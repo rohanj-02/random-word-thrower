@@ -48,14 +48,13 @@ class addWord extends React.Component{
 
     }
 
-
     render(){
         if(this.state.redirect){
             return <Redirect push to="/" />
         }
         return(
             <div>
-                <NavBar/>
+                <NavBar wordList = {this.props.location.state.wordList}/>
                 <div
                 style={{
                 display: "flex",

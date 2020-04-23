@@ -5,6 +5,7 @@ import {Button} from "@material-ui/core";
 import theme from "../theme";
 import {ThemeProvider, Grid} from "@material-ui/core";
 
+//+,?
 class Home extends React.Component {
     
     constructor(props){
@@ -16,13 +17,28 @@ class Home extends React.Component {
     }
 
     async componentDidMount(){
-        if(this.state.wordList.length <= 0){
-            this.callApi()
-            .then((res) => {
-                this.setState({wordList : res});
-            })
-            .catch(err => console.log(err));
+        if(this.props.location.state){
+            const {wordList} = this.props.location.state.wordList;
+            if(wordList){
+                this.setState({wordList : wordList});
+                console.log("Same as before");
+            }
         }
+        // if(this.state.wordList.length <= 0){
+        //     this.callApi()
+        //     .then((res) => {
+        //         this.setState({wordList : res});
+        //     })
+        //     .catch(err => console.log(err));
+        // }
+        this.callApi()
+        .then((res) => {
+            if(res.length > this.state.wordList.length){
+                this.setState({wordList:res});
+                console.log("Updated");
+            }
+        })
+        .catch(err => console.log(err));
     }
     
     callApi = async() => {
@@ -37,7 +53,7 @@ class Home extends React.Component {
         return(
             <div>
                 <ThemeProvider theme={theme}>
-                    <NavBar/>
+                    <NavBar wordList={this.state.wordList}/>
                     <div
                     style={{
                     display: "flex",
@@ -51,7 +67,10 @@ class Home extends React.Component {
                     }}>
                         <Grid container elevation={6}>
                             <Grid item xs = {12} style={{display: "flex", justifyContent: "center", margin: 10}}>
-                                <Link to="/addWord">
+                                <Link to={{
+                                        pathname: "/addWord",
+                                        state: this.state
+                                    }} className="text-link">
                                     <Button variant = "contained" color = "primary" size = "medium" name="addButton">
                                         Add a word
                                     </Button>

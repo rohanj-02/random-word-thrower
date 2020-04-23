@@ -12,10 +12,8 @@ const listWord = (props) => {
     return(
         <div style={{width:"100%"}}>
             <ThemeProvider theme={theme}>
-                <NavBar/>
-                {/* <Grid container> */}
-                    {listOfWords}
-                {/* </Grid> */}
+                <NavBar wordList ={ wordList}/>
+                {listOfWords}
             </ThemeProvider>
         </div>
     )

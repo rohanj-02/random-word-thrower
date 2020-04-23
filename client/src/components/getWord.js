@@ -52,7 +52,7 @@ class getWord extends React.Component{
         return (
             <div>
                 <ThemeProvider theme={theme}>
-                    <NavBar/>
+                    <NavBar wordList ={ this.props.location.state.wordList}/>
                     <div 
                         style={{
                             justifyContent:"center",
